@@ -30,7 +30,7 @@ const Button: FC<ButtonProps> = ({ id, icon, children }) => {
 			ref={ setNodeRef }
 			{ ...listeners }
 			{ ...attributes }
-			className='bg-blue-100 flex flex-col items-center gap-3 pt-3 pb-4.5 px-4 text-xs rounded-md h-max cursor-pointer'
+			className='bg-blue-100 flex flex-col items-center gap-3 pt-3 pb-4.5 px-4 text-xs rounded-md h-max'
 			style={ style }
 		>
 			<Icon className='text-blue-300'/>

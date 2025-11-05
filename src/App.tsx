@@ -1,12 +1,15 @@
 import './App.css'
 import { Layout } from './components/Layout';
-import { ToolBar } from './features/toolbar';
+import { DndWrapper, ToolBar, WorkingArea } from './features';
 
 function App() {
-  return (
+	return (
 		<Layout>
-			<ToolBar />
-			<div>123</div>
+			<DndWrapper>
+				<ToolBar/>
+				<WorkingArea/>
+				<div>123</div>
+			</DndWrapper>
 		</Layout>
 	)
 }
