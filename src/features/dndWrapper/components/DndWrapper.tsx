@@ -1,8 +1,8 @@
 import { type FC, type ReactNode, useCallback } from 'react';
 import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { setBlocs } from '../../../store/reducers/blocsSlice';
-import type { Bloc } from '../../../types/blocs';
+import { addBloc, removeBloc } from '../../../store/reducers/blocsSlice';
+import { type Bloc, BlocStatus } from '../../../types/blocs';
 
 interface DndWrapperProps {
 	children: ReactNode
@@ -19,15 +19,18 @@ const DndWrapper: FC<DndWrapperProps> = ({ children }) => {
 
 		const blocId = active.id as string;
 		const newStatus = over.id as Bloc['status'];
+		const activeBloc = blocs.find(i => i.id === blocId);
 
-		dispatch(setBlocs(blocs.map((bloc) =>
-			bloc.id === blocId
-				? {
-					...bloc,
-					status: newStatus,
-				}
-				: bloc,
-		)));
+		if (!activeBloc) return;
+
+		if (newStatus !== activeBloc.status) {
+			if (newStatus === BlocStatus.WorkingArea) {
+				const newId = Date.now().toString();
+				dispatch(addBloc({ ...activeBloc, id: newId, status: BlocStatus.WorkingArea }));
+			} else {
+				dispatch(removeBloc(activeBloc.id));
+			}
+		}
 	}, [ blocs, dispatch ]);
 
 	return (

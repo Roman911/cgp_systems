@@ -30,7 +30,7 @@ const initialState: BlocsState = {
 			id: '4',
 			icon: 'image',
 			title: 'Image',
-			status: BlocStatus.WorkingArea,
+			status: BlocStatus.Toolbar,
 		},
 	],
 }
@@ -41,10 +41,16 @@ export const blocsSlice = createSlice({
 	reducers: {
 		setBlocs: (state, actions: PayloadAction<Bloc[]>) => {
 			state.blocs = actions.payload;
-		}
+		},
+		addBloc: (state, actions: PayloadAction<Bloc>) => {
+			state.blocs.push(actions.payload);
+		},
+		removeBloc: (state, actions: PayloadAction<string>) => {
+			state.blocs = state.blocs.filter(item => item.id !== actions.payload);
+		},
 	},
 });
 
-export const { setBlocs } = blocsSlice.actions
+export const { addBloc, removeBloc, setBlocs } = blocsSlice.actions
 
 export default blocsSlice.reducer
