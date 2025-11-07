@@ -13,5 +13,7 @@ export interface Bloc {
 	id: string;
 	icon: Icons;
 	title: string;
+	label?: string;
+	src?: string;
 	status: BlocStatus;
 }

@@ -1,4 +1,4 @@
-import { Button } from '../';
+import { Bloc } from '../Bloc';
 import { BlocStatus } from '../../../../types/blocs';
 import { BlocSection } from '../../../../components';
 
@@ -7,9 +7,9 @@ const ToolBar = () => {
 		<BlocSection
 			status={ BlocStatus.Toolbar }
 			renderItem={ bloc => (
-				<Button key={ bloc.id } id={ bloc.id } icon={ bloc.icon }>
+				<Bloc key={ bloc.id } id={ bloc.id } icon={ bloc.icon }>
 					{ bloc.title }
-				</Button>
+				</Bloc>
 			)}
 		/>
 	);

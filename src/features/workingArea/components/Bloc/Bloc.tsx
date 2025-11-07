@@ -1,41 +1,32 @@
-import { useDraggable } from '@dnd-kit/core';
-import type { FC, ReactNode } from 'react';
-import * as Icons from '../../../../components/icons';
+import { type FC, type ReactNode, useState } from 'react';
+import { BlocLayout } from '../../../../components';
+import { ActionsBlock } from '../ActionsBlock';
+import { Input } from '../Input';
+import { type Icons } from '../../../../types/blocs';
 
-const icons = {
-	headline: Icons.Headline,
-	image: Icons.Image,
-	paragraph: Icons.TextAlign,
-};
-
-interface BlocProps {
+interface ButtonProps {
 	children: ReactNode
 	id: string
-	icon: keyof typeof icons
+	icon: Icons
+	image?: string
 }
 
-const Bloc: FC<BlocProps> = ({ id, icon, children }) => {
-	const Icon = icons[icon];
+const Bloc: FC<ButtonProps> = ({ id, icon, children, image }) => {
+	const [ isActive, setIsActive ] = useState(false);
+	const [ transform, setTransform ] = useState(false);
 
-	const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
-
-	const style = transform
-		? {
-			transform: `translate(${transform.x}px, ${transform.y}px)`,
-		}
-		: undefined;
+	const handleClick = () => {
+		setIsActive(prevState => !prevState);
+	}
 
 	return (
-		<button
-			ref={ setNodeRef }
-			{ ...listeners }
-			{ ...attributes }
-			className='bg-blue-100 flex flex-col items-center gap-3 pt-3 pb-4.5 px-4 text-xs rounded-md h-max'
-			style={ style }
-		>
-			<Icon className='text-blue-300'/>
-			{ children }
-		</button>
+		<div className='relative'>
+			{ !transform && <ActionsBlock id={ id } isActive={ isActive } /> }
+			<BlocLayout id={ id } icon={ icon } handleClick={ handleClick } isActive={ isActive } setTransform={ setTransform } >
+				{ children }
+			</BlocLayout>
+			{ !transform && isActive && (image ? <p className='p-1 bg-white absolute bottom-3.5 left-2.5 right-2.5 rounded-xs text-center'>{ image }</p> : <Input id={ id } />) }
+		</div>
 	)
 };
 

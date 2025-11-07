@@ -9,7 +9,7 @@ const Layout = () => {
 			status={ BlocStatus.WorkingArea }
 			className='bg-gray-100'
 			renderItem={ bloc => (
-				<Bloc key={ bloc.id } id={ bloc.id } icon={ bloc.icon }>
+				<Bloc key={ bloc.id } id={ bloc.id } icon={ bloc.icon } image={ bloc.src }>
 					{ bloc.title }
 				</Bloc>
 			)}

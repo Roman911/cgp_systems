@@ -25,8 +25,7 @@ const DndWrapper: FC<DndWrapperProps> = ({ children }) => {
 
 		if (newStatus !== activeBloc.status) {
 			if (newStatus === BlocStatus.WorkingArea) {
-				const newId = Date.now().toString();
-				dispatch(addBloc({ ...activeBloc, id: newId, status: BlocStatus.WorkingArea }));
+				dispatch(addBloc(blocId));
 			} else {
 				dispatch(removeBloc(activeBloc.id));
 			}
