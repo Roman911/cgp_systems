@@ -1,6 +1,6 @@
 import './App.css'
 import { Layout } from './components/Layout';
-import { DndWrapper, ToolBar, WorkingArea } from './features';
+import { DndWrapper, ToolBar, ViewContent, WorkingArea } from './features';
 
 function App() {
 	return (
@@ -8,7 +8,7 @@ function App() {
 			<DndWrapper>
 				<ToolBar/>
 				<WorkingArea/>
-				<div>123</div>
+				<ViewContent />
 			</DndWrapper>
 		</Layout>
 	)

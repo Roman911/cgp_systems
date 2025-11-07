@@ -27,6 +27,7 @@ const BlocLayout: FC<BlocLayoutProps> = ({ id, isToolbar, isActive, icon, childr
 		? {
 			opacity: 0.8,
 			transform: `translate(${transform.x}px, ${transform.y}px)`,
+			zIndex: 10,
 		} : undefined;
 
 	useEffect(() => {

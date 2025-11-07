@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { useAppSelector } from '../../hooks/redux';
 import { type Bloc, BlocStatus } from '../../types/blocs';
 import { filterByStatus } from '../../utils/filterByStatus.ts';
+import { NoResultBlock } from '../NoResultBlock';
 
 interface BlocSectionProps {
 	status: BlocStatus;
@@ -22,7 +23,7 @@ const BlocSection = ({ status, renderItem, className, isWorkingArea }: BlocSecti
 			<div
 				className={ twMerge('grid gap-2.5 grid-cols-2', isWorkingArea && 'grid-cols-1') }
 			>
-				{ filteredBlocs.map(renderItem) }
+				{ filteredBlocs.length === 0 ? <NoResultBlock text='To add a block, drag or click on it' /> : filteredBlocs.map(renderItem) }
 			</div>
 		</section>
 	);

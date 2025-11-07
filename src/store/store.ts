@@ -1,17 +1,24 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore, type ConfigureStoreOptions } from '@reduxjs/toolkit';
+import { localStorageMiddleware } from './middleware/localStorage.ts';
+import blocsReducer from './reducers/blocsSlice.ts';
+import { loadFromLocalStorage } from '../utils/localStorage.ts';
 
-import blocsReducer from './reducers/blocsSlice';
+// Load blocs from localStorage (if available)
+const preloadedState = {
+	blocsReducer: {
+		blocs: loadFromLocalStorage('blocs', []),
+	},
+};
 
-const rootReducer = combineReducers({
-	blocsReducer,
-})
+// Typed configureStore
+export const setupStore = configureStore({
+	reducer: {
+		blocsReducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(localStorageMiddleware),
+	preloadedState,
+} satisfies ConfigureStoreOptions);
 
-export const setupStore = () => {
-	return configureStore({
-		reducer: rootReducer,
-	})
-}
-
-export type RootState = ReturnType<typeof rootReducer>
-export type AppStore = ReturnType<typeof setupStore>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<typeof setupStore.getState>;
+export type AppDispatch = typeof setupStore.dispatch;

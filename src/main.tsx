@@ -5,11 +5,9 @@ import './index.css';
 import App from './App.tsx';
 import { setupStore } from './store/store';
 
-const store = setupStore();
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-		<Provider store={ store } >
+		<Provider store={ setupStore } >
 			<App />
 		</Provider>
   </StrictMode>,

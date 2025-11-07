@@ -19,7 +19,7 @@ const DndWrapper: FC<DndWrapperProps> = ({ children }) => {
 
 		const blocId = active.id as string;
 		const newStatus = over.id as Bloc['status'];
-		const activeBloc = blocs.find(i => i.id === blocId);
+		const activeBloc = blocs.find((i: { id: string; }) => i.id === blocId);
 
 		if (!activeBloc) return;
 
