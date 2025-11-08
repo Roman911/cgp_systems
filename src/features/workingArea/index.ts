@@ -1,1 +1,1 @@
-export { default as WorkingArea } from './components/Layout/Layout';
+export { WorkingArea } from './components/WorkingArea';

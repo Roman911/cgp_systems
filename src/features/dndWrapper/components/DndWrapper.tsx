@@ -5,38 +5,32 @@ import { addBloc, removeBloc } from '../../../store/reducers/blocsSlice';
 import { type Bloc, BlocStatus } from '../../../types/blocs';
 
 interface DndWrapperProps {
-	children: ReactNode
+	children: ReactNode;
 }
 
 const DndWrapper: FC<DndWrapperProps> = ({ children }) => {
 	const dispatch = useAppDispatch();
-	const { blocs } = useAppSelector(state => state.blocsReducer);
+	const blocs = useAppSelector(state => state.blocsReducer.blocs);
 
 	const handleDragEnd = useCallback((event: DragEndEvent) => {
 		const { active, over } = event;
-
 		if(!over) return;
 
-		const blocId = active.id as string;
+		const blocId = String(active.id);
 		const newStatus = over.id as Bloc['status'];
-		const activeBloc = blocs.find((i: { id: string; }) => i.id === blocId);
+		const activeBloc = blocs.find((b: { id: string; }) => b.id === blocId);
 
-		if (!activeBloc) return;
+		if (!activeBloc || newStatus === activeBloc.status) return;
 
-		if (newStatus !== activeBloc.status) {
-			if (newStatus === BlocStatus.WorkingArea) {
-				dispatch(addBloc(blocId));
-			} else {
-				dispatch(removeBloc(activeBloc.id));
-			}
+		// Handle move between zones
+		if (newStatus === BlocStatus.WorkingArea) {
+			dispatch(addBloc(blocId));
+		} else {
+			dispatch(removeBloc(activeBloc.id));
 		}
 	}, [ blocs, dispatch ]);
 
-	return (
-		<DndContext onDragEnd={ handleDragEnd }>
-			{ children }
-		</DndContext>
-	)
+	return <DndContext onDragEnd={handleDragEnd}>{children}</DndContext>;
 };
 
 export default DndWrapper;

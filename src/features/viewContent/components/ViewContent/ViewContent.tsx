@@ -3,6 +3,7 @@ import { useLocalStorageSync } from '../../hooks/useLocalStorageSync.ts';
 import { filterByStatus } from '../../../../utils/filterByStatus.ts';
 import { BlocStatus } from '../../../../types/blocs.ts';
 import { NoResultBlock } from '../../../../components';
+import Item from './Item.tsx';
 
 const ViewContent = () => {
 	const blocs = useLocalStorageSync('blocs', []);
@@ -10,8 +11,8 @@ const ViewContent = () => {
 
 	return (
 		<Layout>
-			{ workingBlocs.length === 0 ? <NoResultBlock text='no result' /> : workingBlocs.map(block => {
-				return <div key={ block.id }>123</div>
+			{ workingBlocs.length === 0 ? <NoResultBlock text='no result' /> : workingBlocs.map(item => {
+				return <Item key={ item.id } item={ item } />
 			}) }
 		</Layout>
 	);

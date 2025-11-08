@@ -1,48 +1,36 @@
 import type { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.ts';
-import { addBloc, removeBloc, setBlocs } from '../../../../store/reducers/blocsSlice.ts';
-import Button from './Button.tsx';
 import { twMerge } from 'tailwind-merge';
-import { moveItem } from '../../utils/moveItem.ts';
-import { BlocStatus } from '../../../../types/blocs.ts';
-import { filterByStatus } from '../../../../utils/filterByStatus.ts';
+import { useBlocActions } from '../../hooks/useBlocActions';
+import Button from './Button';
 
 interface ActionsBlockProps {
-	id: string
-	isActive: boolean
+	id: string;
+	isActive: boolean;
 }
 
 const ActionsBlock: FC<ActionsBlockProps> = ({ id, isActive }) => {
-	const dispatch = useAppDispatch();
-	const { blocs } = useAppSelector(state => state.blocsReducer);
-	const workingBlocs = filterByStatus(blocs, BlocStatus.WorkingArea);
-
-	const onCloneBlock = () => {
-		dispatch(addBloc(id));
-	}
-
-	const onRemoveBloc = () => {
-		dispatch(removeBloc(id));
-	}
-
-	const moveBloc = (action: number) => {
-		const index = workingBlocs.findIndex(item => item.id === id);
-		const newBlocs = moveItem(workingBlocs, index, index + action);
-		dispatch(setBlocs(newBlocs));
-	}
+	const { handleClone, handleRemove, handleMove } = useBlocActions(id);
 
 	return (
-		<div className={ twMerge('absolute -top-8 right-0 gap-1 hidden z-10', isActive && 'flex') }>
-			<div className='bg-blue-500 rounded-t-sm p-1'>
-				<Button isArrow icon='arrowDown' handleClick={ () => moveBloc(1) } />
-				<Button isArrow icon='arrowTop' handleClick={ () => moveBloc(-1) } />
+		<div
+			className={ twMerge(
+				'absolute -top-7 right-2.5 hidden gap-2 z-10',
+				isActive && 'flex'
+			) }
+		>
+			{/* Move controls */}
+			<div className="flex rounded-t-sm bg-blue-400 px-1.5 py-1">
+				<Button isArrow icon="arrowDown" onClick={ () => handleMove(1) }/>
+				<Button isArrow icon="arrowTop" onClick={ () => handleMove(-1) }/>
 			</div>
-			<div className='bg-cyan-400 rounded-t-sm p-1'>
-				<Button icon='clone' handleClick={ onCloneBlock } />
-				<Button icon='basket' handleClick={ onRemoveBloc } />
+
+			{/* Clone / Delete controls */}
+			<div className="flex rounded-t-sm bg-cyan-300 px-1.5 py-1">
+				<Button icon="clone" onClick={ handleClone }/>
+				<Button icon="basket" onClick={ handleRemove }/>
 			</div>
 		</div>
-	)
+	);
 };
 
 export default ActionsBlock;

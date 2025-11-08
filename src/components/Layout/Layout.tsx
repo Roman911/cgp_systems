@@ -8,7 +8,7 @@ interface LayoutProps {
 const LayoutWrapper: FC<LayoutProps> = ({ children }) => {
 	return <>
 		<Header />
-		<main className='container mx-auto max-w-[1420px] px-4 min-h-screen grid grid-cols-[270px_auto_auto]'>
+		<main className='container mx-auto max-w-[1440px] min-h-screen grid grid-cols-[270px_auto_632px]'>
 			{ children }
 		</main>
 	</>

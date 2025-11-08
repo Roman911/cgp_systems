@@ -1,6 +1,6 @@
 import { Bloc } from '../Bloc';
 import { BlocStatus } from '../../../../types/blocs';
-import { BlocSection } from '../../../../components';
+import { BlocSection } from '../../../Bloc';
 
 const ToolBar = () => {
 	return (

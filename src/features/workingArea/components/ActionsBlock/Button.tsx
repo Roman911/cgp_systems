@@ -1,6 +1,6 @@
-import type { FC } from 'react';
-import * as Icons from '../../../../icons';
+import { type FC, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import * as Icons from '../../../../icons';
 
 const icons = {
 	arrowDown: Icons.ArrowDown,
@@ -10,24 +10,35 @@ const icons = {
 };
 
 interface ButtonProps {
-	icon: keyof typeof icons
-	isArrow?: boolean
-	handleClick: () => void
+	icon: keyof typeof icons;
+	isArrow?: boolean;
+	onClick: () => void;
+	className?: string;
 }
 
-const Button: FC<ButtonProps> = ({ icon, isArrow, handleClick }) => {
+const Button: FC<ButtonProps> = memo(({ icon, isArrow, onClick, className }) => {
 	const Icon = icons[icon];
 
 	return (
 		<button
-			onClick={ handleClick }
-			className='text-white cursor-pointer group/action'
+			type="button"
+			onClick={ onClick }
+			className={ twMerge(
+				'flex items-center justify-center cursor-pointer text-white transition-colors duration-150 group/action',
+				className
+			) }
+			aria-label={ icon }
 		>
 			<Icon
-				className={ twMerge('rounded-xs group-hover/action:bg-cyan-600', isArrow && 'group-hover/action:bg-blue-600') }
+				className={ twMerge(
+					'rounded-xs transition-colors duration-150 group-hover/action:bg-cyan-500',
+					isArrow && 'group-hover/action:bg-blue-600'
+				) }
 			/>
 		</button>
-	)
-};
+	);
+});
+
+Button.displayName = 'Button';
 
 export default Button;

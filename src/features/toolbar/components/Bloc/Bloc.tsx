@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { addBloc } from '../../../../store/reducers/blocsSlice';
-import { BlocLayout } from '../../../../components';
+import { BlocLayout } from '../../../Bloc';
 import * as Icon from '../../../../icons';
 import { type Icons } from '../../../../types/blocs';
 

@@ -1,5 +1,4 @@
-import './App.css'
-import { Layout } from './components/Layout';
+import { Layout } from './components';
 import { DndWrapper, ToolBar, ViewContent, WorkingArea } from './features';
 
 function App() {

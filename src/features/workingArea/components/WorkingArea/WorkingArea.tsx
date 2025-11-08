@@ -1,8 +1,8 @@
 import { BlocStatus } from '../../../../types/blocs';
-import { BlocSection } from '../../../../components';
+import { BlocSection } from '../../../Bloc';
 import { Bloc } from '../Bloc';
 
-const Layout = () => {
+const WorkingArea = () => {
 	return (
 		<BlocSection
 			isWorkingArea
@@ -17,4 +17,4 @@ const Layout = () => {
 	);
 };
 
-export default Layout;
+export default WorkingArea;
